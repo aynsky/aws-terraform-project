@@ -1,0 +1,28 @@
+|-modules
+|      |-network
+|      |    |-main.tf
+|      |    |-variables.tf
+|      |    |-outputs.tf
+|      |-web_server
+|      |    |-main.tf
+|      |    |-variables.tf
+|      |    |-outputs.tf
+|      |-database
+|      |    |-main.tf
+|      |    |-variables.tf
+|      |    |-outputs.tf
+|      |-storage
+|           |-main.tf
+|           |-variables.tf
+|           |-outputs.tf
+|-environments
+|      |-dev.tfvars
+|      |-prod.tfvars
+|-main.tf  # Provider and global config
+|-network.tf  # VPC and networking
+|-EC2.tf  # EC2 instances and ELB
+|-RDS_DB.tf  # RDS and DynamoDB
+|-S3.tf  # S3 bucket
+|-variables.tf
+|-outputs.tf
+|-backend.tf
