@@ -22,8 +22,9 @@ variable "vpc_id" {
 }
 
 variable "ec2_security_group_id" {
-  description = "Security group ID of the EC2 instances"
+  description = "Security group ID for EC2 instances"
   type        = string
+
 }
 
 variable "environment" {
@@ -32,7 +33,16 @@ variable "environment" {
   default     = "dev"
 
 }
+
 variable "web_server_instances" {
   description = "Map of EC2 instances created by the web_server module"
   type        = map(string)
 }
+
+variable "private_subnets" {
+  description = "List of private subnets for the RDS instance"
+  type        = list(string)
+}
+
+
+

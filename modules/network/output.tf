@@ -1,5 +1,6 @@
 output "vpc_id" {
-  value = aws_vpc.this.id
+  description = "value of vpc id"
+  value       = aws_vpc.this.id
 }
 
 output "public_subnets" {
@@ -22,3 +23,4 @@ output "web_target_group_arn" {
   description = "value of web target group arn"
   value       = aws_lb_target_group.web_tg.arn
 }
+

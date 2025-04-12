@@ -62,4 +62,10 @@ variable "db_password" {
   type        = string
   sensitive   = true # To keep the password hidden
 }
+variable "db_instance_class" {
+  description = "The instance class for the RDS instance"
+  type        = string
+  default     = "db.t3.micro"
+
+}
 

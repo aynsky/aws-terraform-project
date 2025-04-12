@@ -7,7 +7,7 @@ resource "aws_security_group" "rds_sg" {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [var.ec2_security_group_id] # Allow traffic from EC2 SG
+    security_groups = [var.ec2_security_group_id] # Allow access from EC2 instances
   }
 
   egress {
@@ -22,6 +22,15 @@ resource "aws_security_group" "rds_sg" {
   }
 }
 
+resource "aws_db_subnet_group" "rds_subnet_group" {
+  name       = "${var.environment}-rds-subnet-group"
+  subnet_ids = var.private_subnets
+
+  tags = {
+    Name = "${var.environment}-rds-subnet-group"
+  }
+}
+
 resource "aws_db_instance" "rds" {
   for_each = var.web_server_instances
 
@@ -29,12 +38,13 @@ resource "aws_db_instance" "rds" {
   engine                 = "mysql"
   engine_version         = "8.0"
   instance_class         = var.db_instance_class
-  name                   = "${replace(each.key, "-", "")}-db"
+  name                   = "db${replace(each.key, "-", "")}"
   username               = var.db_username
   password               = var.db_password
   parameter_group_name   = "default.mysql8.0"
   skip_final_snapshot    = true
-  vpc_security_group_ids = [aws_security_group.rds_sg.id] # Attach RDS SG
+  vpc_security_group_ids = [var.ec2_security_group_id]
+  db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group.name
 
   tags = {
     Name = "${each.key}-db-instance"
